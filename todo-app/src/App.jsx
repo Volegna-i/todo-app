@@ -1,35 +1,45 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import { Component } from "react";
 
-function App() {
-  const [count, setCount] = useState(0)
+import TaskList from "./components/TaskList";
+import NewTaskForm from "./components/NewTaskForm";
+import Footer from "./components/Footer";
 
-  return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+export default class App extends Component {
+  maxId = 100;
+
+  state = {
+    todoData: [],
+  };
+
+  addItem = (text) => {
+    const newItem = {
+      label: text,
+      editing: false,
+      completed: false,
+      id: this.maxId++,
+    };
+
+    console.log(newItem);
+
+    this.setState(({ todoData }) => {
+      const newArr = [...todoData, newItem];
+
+      return {
+        todoData: newArr,
+      };
+    });
+  };
+
+  render() {
+    return (
+      <section className="todoapp">
+        <header className="header">
+          <h1>todos</h1>
+          <NewTaskForm onItemAdded={this.addItem} />
+        </header>
+        <TaskList todos={this.state.todoData} />
+        <Footer />
+      </section>
+    );
+  }
 }
-
-export default App
