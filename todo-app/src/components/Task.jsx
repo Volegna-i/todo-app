@@ -26,13 +26,35 @@ export default class Task extends Component {
 
   onEditKeyDown = (event) => {
     if (event.key === "Enter") {
-      this.props.updateLabel(this.state.editText);
-      this.setState({ editing: false });
+      this.saveChanges();
+    } else if (event.key === "Escape") {
+      this.cancelEditing();
     }
+  };
+
+  saveChanges = () => {
+    const { editText } = this.state;
+
+    if (editText.trim()) {
+      this.props.updateLabel(editText);
+    }
+
+    this.setState({ editing: false });
+  };
+
+  cancelEditing = () => {
+    this.setState({
+      editing: false,
+      editText: this.props.label,
+    });
   };
 
   onDeleteClick = () => {
     this.props.deleteItem();
+  };
+
+  onBlur = () => {
+    this.saveChanges();
   };
 
   render() {
@@ -70,8 +92,10 @@ export default class Task extends Component {
             type="text"
             className="edit"
             defaultValue={label}
+            autoFocus
             onChange={this.onEditChange}
             onKeyDown={this.onEditKeyDown}
+            onBlur={this.onBlur}
           />
         )}
       </li>
