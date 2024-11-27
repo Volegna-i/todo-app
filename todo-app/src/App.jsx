@@ -11,21 +11,39 @@ export default class App extends Component {
     todoData: [],
   };
 
+  updateLabel = (id, newLabel) => {
+    this.setState(({ todoData }) => {
+      const updatedTasks = todoData.map((task) =>
+        task.id === id ? { ...task, label: newLabel } : task
+      );
+
+      return {
+        todoData: updatedTasks,
+      };
+    });
+  };
+
   addItem = (text) => {
     const newItem = {
       label: text,
-      editing: false,
-      completed: false,
       id: this.maxId++,
     };
-
-    console.log(newItem);
 
     this.setState(({ todoData }) => {
       const newArr = [...todoData, newItem];
 
       return {
         todoData: newArr,
+      };
+    });
+  };
+
+  deleteItem = (id) => {
+    this.setState(({ todoData }) => {
+      const updatedTasks = todoData.filter((task) => task.id !== id);
+
+      return { 
+        todoData: updatedTasks 
       };
     });
   };
@@ -37,7 +55,11 @@ export default class App extends Component {
           <h1>todos</h1>
           <NewTaskForm onItemAdded={this.addItem} />
         </header>
-        <TaskList todos={this.state.todoData} />
+        <TaskList 
+          todos={this.state.todoData} 
+          updateLabel={this.updateLabel}
+          deleteItem={this.deleteItem} 
+        />
         <Footer />
       </section>
     );
