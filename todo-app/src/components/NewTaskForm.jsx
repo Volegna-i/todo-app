@@ -2,28 +2,27 @@ import { Component } from "react";
 import PropTypes from "prop-types";
 
 export default class NewTaskForm extends Component {
-
   state = {
-    task: ''
+    task: "",
   };
 
   handleChange = (event) => {
-    this.setState({ 
-      task: event.target.value 
+    this.setState({
+      task: event.target.value,
     });
   };
 
   handleKeyDown = (event) => {
-    if (event.key === 'Enter') {
+    if (event.key === "Enter") {
       const { task } = this.state;
 
       if (task.trim()) {
         this.props.onItemAdded(task);
-        this.setState({ task: '' });
+        this.setState({ task: "" });
       }
     }
   };
-  
+
   render() {
     return (
       <input
@@ -35,8 +34,8 @@ export default class NewTaskForm extends Component {
         onKeyDown={this.handleKeyDown}
       />
     );
-  };
-};
+  }
+}
 
 NewTaskForm.propTypes = {
   onItemAdded: PropTypes.func,

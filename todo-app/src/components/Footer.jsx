@@ -1,4 +1,4 @@
-import TasksFilter from './TasksFilter';
+import TasksFilter from "./TasksFilter";
 
 const Footer = () => {
   return (
