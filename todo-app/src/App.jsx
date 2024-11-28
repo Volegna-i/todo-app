@@ -27,6 +27,7 @@ export default class App extends Component {
     const newItem = {
       label: text,
       id: this.maxId++,
+      createdAt: new Date(),
     };
 
     this.setState(({ todoData }) => {

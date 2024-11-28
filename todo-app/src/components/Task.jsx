@@ -1,4 +1,5 @@
 import { Component } from "react";
+import { formatDistanceToNow } from "date-fns";
 import PropTypes from "prop-types";
 
 export default class Task extends Component {
@@ -58,7 +59,7 @@ export default class Task extends Component {
   };
 
   render() {
-    const { label } = this.props;
+    const { label, createdAt } = this.props;
     const { completed, editing } = this.state;
 
     const classNames = `
@@ -76,7 +77,13 @@ export default class Task extends Component {
           />
           <label>
             <span className="description">{label}</span>
-            <span className="created">created 17 seconds ago</span>
+            <span className="created">
+              created{" "}
+              {formatDistanceToNow(new Date(createdAt), {
+                addSuffix: true,
+                includeSeconds: true,
+              })}
+            </span>
           </label>
           <button
             className="icon icon-edit"
@@ -109,4 +116,5 @@ Task.propTypes = {
   completed: PropTypes.bool,
   updateLabel: PropTypes.func,
   deleteItem: PropTypes.func,
+  createdAt: PropTypes.instanceOf(Date).isRequired,
 };
