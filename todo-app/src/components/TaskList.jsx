@@ -1,7 +1,7 @@
 import Task from "./Task";
 import PropTypes from "prop-types";
 
-const TaskList = ({ todos, updateLabel, deleteItem }) => {
+const TaskList = ({ todos, updateLabel, deleteItem, onToggleDone }) => {
   const elements = todos.map((item) => {
     const { id, ...itemProps } = item;
 
@@ -11,6 +11,7 @@ const TaskList = ({ todos, updateLabel, deleteItem }) => {
         {...itemProps}
         updateLabel={(newLabel) => updateLabel(id, newLabel)}
         deleteItem={() => deleteItem(id)}
+        onToggleDone={() => onToggleDone(id)}
       />
     );
   });

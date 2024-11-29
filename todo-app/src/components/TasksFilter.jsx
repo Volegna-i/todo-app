@@ -2,16 +2,33 @@ import { Component } from "react";
 
 export default class TasksFilter extends Component {
   render() {
+    const { filter, filterChange } = this.props;
+
     return (
       <ul className="filters">
         <li>
-          <button className="selected">All</button>
+          <button
+            className={filter === 'All' ? 'selected' : ''}
+            onClick={() => filterChange('All')}
+          >
+            All
+          </button>
         </li>
         <li>
-          <button>Active</button>
+          <button
+            className={filter === 'Active' ? 'selected' : ''}
+            onClick={() => filterChange('Active')}
+          >
+            Active
+          </button>
         </li>
         <li>
-          <button>Completed</button>
+          <button
+            className={filter === 'Completed' ? 'selected' : ''}
+            onClick={() => filterChange('Completed')}
+          >
+            Completed
+          </button>
         </li>
       </ul>
     );

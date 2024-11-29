@@ -4,15 +4,8 @@ import PropTypes from "prop-types";
 
 export default class Task extends Component {
   state = {
-    completed: false,
     editing: false,
     editText: this.props.label,
-  };
-
-  onCompletedClick = () => {
-    this.setState((prevState) => ({
-      completed: !prevState.completed,
-    }));
   };
 
   onEditingClick = () => {
@@ -59,8 +52,8 @@ export default class Task extends Component {
   };
 
   render() {
-    const { label, createdAt } = this.props;
-    const { completed, editing } = this.state;
+    const { label, createdAt, onToggleDone, completed } = this.props;
+    const { editing } = this.state;
 
     const classNames = `
     ${completed ? "completed" : ""} 
@@ -73,12 +66,13 @@ export default class Task extends Component {
           <input
             className="toggle"
             type="checkbox"
-            onClick={this.onCompletedClick}
+            checked={completed}
+            onChange={onToggleDone}
           />
           <label>
             <span className="description">{label}</span>
             <span className="created">
-              created{" "}
+              created{' '}
               {formatDistanceToNow(new Date(createdAt), {
                 addSuffix: true,
                 includeSeconds: true,
